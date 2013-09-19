@@ -20,7 +20,8 @@ public class MavenFindAction {
         List<String> result = new ArrayList<String>();
         try {
             HttpURLConnection connection = getConnection(
-                    "http://search.maven.org/solrsearch/select?q=a:" + text + "+OR+a:" + text + "*&rows=20&wt=json");
+                    "http://search.maven.org/solrsearch/select?q="+text+"&rows=20&wt=json");
+                    //"http://search.maven.org/solrsearch/select?q=a:" + text + "+OR+a:" + text + "*&rows=20&wt=json");
 
             InputStream stream = getResponse(connection);
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
