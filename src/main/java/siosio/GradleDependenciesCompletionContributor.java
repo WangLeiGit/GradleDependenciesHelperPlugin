@@ -44,7 +44,7 @@ public class GradleDependenciesCompletionContributor extends CompletionContribut
                 return;
             }
             String text = trimQuote(position.getText());
-            if (StringUtil.isEmpty(text) || text.length() < 5) {
+            if (StringUtil.isEmpty(text) || text.length() < 3) {
                 return;
             }
             List<String> result = new MavenFindAction().find(text);
