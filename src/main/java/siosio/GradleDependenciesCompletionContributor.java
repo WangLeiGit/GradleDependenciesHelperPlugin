@@ -14,6 +14,8 @@ import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrApplicationStatement;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.literals.GrLiteral;
+import org.ligi.gradecoba.Artifact;
+import org.ligi.gradecoba.ArtifactProvider;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
@@ -47,7 +49,15 @@ public class GradleDependenciesCompletionContributor extends CompletionContribut
             if (StringUtil.isEmpty(text) || text.length() < 3) {
                 return;
             }
+
             List<String> result = new MavenFindAction().find(text);
+
+            if (parameters.getOriginalFile().getText().contains("android")) {
+                for (Artifact artifact: new ArtifactProvider().searchArtifacts(text)) {
+                    result.add(0,artifact.getGradleDependencyString());
+                }
+            }
+
             for (final String id : result) {
                 set.addElement(new LookupElement() {
                     @NotNull
